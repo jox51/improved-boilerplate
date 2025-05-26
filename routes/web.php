@@ -46,8 +46,12 @@ Route::get('/contact-us', function () {
 Route::post('stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])
     ->name('cashier.webhook');
 
+    // Blog routes
+$blogBasePath = config('blog.base_path', 'blog');
+$blogAdminPath = config('blog.admin_path', 'admin');
+
 // Arvow webhook route
-Route::post('blog2/webhook', [ArvowWebhookController::class, 'handleWebhook'])
+Route::post($blogBasePath . '/webhook', [ArvowWebhookController::class, 'handleWebhook'])
     ->name('arvow.webhook');
 
 Route::get('/dashboard', function () {
@@ -76,9 +80,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout/cancel', [StripeController::class, 'cancel'])->name('checkout.cancel');
 });
 
-// Blog routes
-$blogBasePath = config('blog.base_path', 'blog');
-$blogAdminPath = config('blog.admin_path', 'admin');
+
 
 // Public Blog Routes
 Route::get('/' . $blogBasePath, [BlogPostController::class, 'showPublicBlogIndex'])->name('blog.public.index');
