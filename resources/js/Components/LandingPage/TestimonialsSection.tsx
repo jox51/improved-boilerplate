@@ -7,9 +7,9 @@ const TestimonialsSection: React.FC = () => {
     // Testimonials data matching the HTML template
     const testimonials = [
         {
-            quote: "Arbscreener has revolutionized my trading strategy. I've increased my profits by 40% in just 3 months.",
+            quote: "This platform has revolutionized our workflow. We've increased our efficiency by 40% in just 3 months.",
             authorName: "Alex Chen",
-            authorTitle: "Crypto Trader",
+            authorTitle: "Operations Manager",
             authorInitial: "A",
             avatarGradientFrom: "from-blue-500",
             avatarGradientTo: "to-purple-600",
@@ -18,9 +18,9 @@ const TestimonialsSection: React.FC = () => {
             hoverBorderColor: "hover:border-green-500/50",
         },
         {
-            quote: "The real-time alerts are incredibly accurate. I never miss a profitable opportunity anymore.",
+            quote: "The real-time insights are incredibly accurate. We never miss important opportunities anymore.",
             authorName: "Sarah Johnson",
-            authorTitle: "DeFi Investor",
+            authorTitle: "Business Analyst",
             authorInitial: "S",
             avatarGradientFrom: "from-pink-500",
             avatarGradientTo: "to-red-600",
@@ -29,9 +29,9 @@ const TestimonialsSection: React.FC = () => {
             hoverBorderColor: "hover:border-blue-500/50",
         },
         {
-            quote: "Best arbitrage tool I've used. The interface is clean and the data is always reliable.",
+            quote: "Best analytics platform we've used. The interface is clean and the data is always reliable.",
             authorName: "Mike Rodriguez",
-            authorTitle: "Portfolio Manager",
+            authorTitle: "Product Manager",
             authorInitial: "M",
             avatarGradientFrom: "from-green-500",
             avatarGradientTo: "to-teal-600",
@@ -41,13 +41,13 @@ const TestimonialsSection: React.FC = () => {
         },
     ];
 
-    // Exchange data matching the HTML template
-    const exchanges = [
-        { name: "Binance", textColorClass: "text-yellow-500" },
-        { name: "Coinbase", textColorClass: "text-blue-500" },
-        { name: "Kraken", textColorClass: "text-purple-500" },
-        { name: "Bybit", textColorClass: "text-orange-500" },
-        { name: "Uniswap", textColorClass: "text-pink-500" },
+    // Platform integrations data
+    const platforms = [
+        { name: "Slack", textColorClass: "text-yellow-500" },
+        { name: "Microsoft", textColorClass: "text-blue-500" },
+        { name: "Google", textColorClass: "text-purple-500" },
+        { name: "Salesforce", textColorClass: "text-orange-500" },
+        { name: "Zapier", textColorClass: "text-pink-500" },
         { name: "+15 More", textColorClass: "text-green-500" },
     ];
 
@@ -56,7 +56,7 @@ const TestimonialsSection: React.FC = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <SectionHeading
                     title="What Our Users Say"
-                    subtitle="Join thousands of traders who trust Arbscreener"
+                    subtitle="Join thousands of professionals who trust our platform"
                     titleClassName="text-white"
                     subtitleClassName="text-gray-400"
                 />
@@ -80,18 +80,17 @@ const TestimonialsSection: React.FC = () => {
 
                 <div className="text-center" data-aos="fade-up">
                     <h3 className="text-2xl font-bold text-white mb-4">
-                        Supported Exchanges
+                        Supported Integrations
                     </h3>
                     <p className="text-gray-400 mb-8">
-                        Monitor arbitrage opportunities across 20+ major
-                        exchanges
+                        Connect with 20+ popular platforms and services
                     </p>
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 max-w-4xl mx-auto">
-                        {exchanges.map((exchange, index) => (
+                        {platforms.map((platform, index) => (
                             <ExchangeLogoItem
                                 key={index}
-                                name={exchange.name}
-                                textColorClass={exchange.textColorClass}
+                                name={platform.name}
+                                textColorClass={platform.textColorClass}
                             />
                         ))}
                     </div>

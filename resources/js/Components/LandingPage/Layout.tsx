@@ -15,13 +15,17 @@ const Layout: React.FC<LayoutProps> = ({
     laravelVersion,
     phpVersion,
 }) => {
-    const { auth } = usePage<PageProps>().props;
+    const { auth, appName } = usePage<PageProps>().props;
 
     return (
         <>
-            <NavigationBar auth={auth} />
+            <NavigationBar auth={auth} appName={appName} />
             <main className="bg-gray-900 min-h-screen">{children}</main>
-            <Footer laravelVersion={laravelVersion} phpVersion={phpVersion} />
+            <Footer
+                laravelVersion={laravelVersion}
+                phpVersion={phpVersion}
+                appName={appName}
+            />
         </>
     );
 };

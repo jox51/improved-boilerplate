@@ -7,11 +7,13 @@ import Logo from "../../../images/logo.png";
 interface NavigationBarProps {
     auth?: PageProps["auth"];
     className?: string;
+    appName: string;
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = ({
     className = "",
     auth,
+    appName,
 }) => {
     const navRef = useRef<HTMLElement>(null);
     const { blog_base_path } = usePage<PageProps>().props;
@@ -34,11 +36,11 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
                         <div className="flex items-center">
                             <img
                                 src={Logo}
-                                alt="Arbscreener"
+                                alt={appName}
                                 className="w-16 h-16 object-contain"
                             />
                             <i className="fas fa-chart-line mr-2"></i>
-                            Arbscreener
+                            {appName}
                         </div>
                     </Link>
                     <div className="hidden md:flex items-center space-x-8">

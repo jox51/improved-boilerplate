@@ -17,22 +17,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     const infoPoints = [
         {
             icon: "⚡️",
-            text: "AI-powered scanner for spot-to-spot, futures, and DEX arbitrage opportunities",
+            text: "AI-powered platform for advanced analytics and real-time monitoring",
             delay: 100,
         },
         {
             icon: "🔗",
-            text: "Real-time cross-exchange price analysis across multiple blockchains",
+            text: "Real-time data analysis across multiple sources and platforms",
             delay: 200,
         },
         {
             icon: "👥",
-            text: "Discover profitable trades before others do",
+            text: "Discover insights and opportunities before others do",
             delay: 300,
         },
         {
             icon: "📈",
-            text: "Maximize your crypto trading profits with zero manual effort",
+            text: "Maximize your productivity and efficiency with zero manual effort",
             delay: 400,
         },
     ];
@@ -50,14 +50,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                         <AiPoweredBadge />
 
                         <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight text-white">
-                            Find Crypto{" "}
+                            Powerful{" "}
                             <span className="bg-gradient-to-r from-yellow-400 to-orange-500 bg-clip-text text-transparent">
-                                Arbitrage
+                                Analytics
                             </span>{" "}
-                            in <br />
-                            <span className="text-blue-400">
-                                150+ Exchanges
-                            </span>
+                            for <br />
+                            <span className="text-blue-400">Modern Teams</span>
                             <br />
                             <span className="text-2xl md:text-4xl">
                                 Instantly 🚀

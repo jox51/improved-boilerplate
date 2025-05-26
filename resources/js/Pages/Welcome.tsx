@@ -21,7 +21,13 @@ export default function Welcome({
     laravelVersion,
     phpVersion,
     gtmId,
-}: PageProps<{ laravelVersion: string; phpVersion: string; gtmId: string }>) {
+    appName,
+}: PageProps<{
+    laravelVersion: string;
+    phpVersion: string;
+    gtmId: string;
+    appName: string;
+}>) {
     useEffect(() => {
         initAOS();
         initSmoothScroll();
@@ -39,36 +45,36 @@ export default function Welcome({
     const steps = [
         {
             number: 1,
-            title: "Connect Your Exchanges",
+            title: "Connect Your Accounts",
             description:
-                "Link your exchange accounts securely using API keys for real-time data access.",
+                "Link your accounts securely using API keys for real-time data access and seamless integration.",
         },
         {
             number: 2,
             title: "Set Your Preferences",
             description:
-                "Configure filters for trading pairs, minimum profit margins, and notification preferences.",
+                "Configure filters, customize settings, and set up notification preferences to match your needs.",
         },
         {
             number: 3,
-            title: "Start Earning",
+            title: "Start Using",
             description:
-                "Receive instant alerts for profitable arbitrage opportunities and execute trades.",
+                "Receive instant alerts and notifications for important updates and take action when needed.",
         },
     ];
 
     return (
         <>
-            <Head title="Arbitrage Screener">
+            <Head title={appName}>
                 <meta
                     name="description"
-                    content="Arbitrage Screener is a tool that helps you find profitable arbitrage opportunities in the crypto market."
+                    content="A powerful platform that helps you manage and optimize your workflow with advanced features and real-time insights."
                 />
                 <meta
                     name="keywords"
-                    content="crypto arbitrage, crypto trading, crypto arbitrage bot, crypto arbitrage strategy, crypto arbitrage opportunities, crypto arbitrage calculator, crypto arbitrage finder, crypto arbitrage scanner, crypto arbitrage tool, crypto arbitrage software, crypto arbitrage platform, crypto arbitrage service, crypto arbitrage app, crypto arbitrage tool, crypto arbitrage software, crypto arbitrage platform, crypto arbitrage service, crypto arbitrage app"
+                    content="platform, dashboard, analytics, automation, workflow, productivity, management, tools, software, application, service, solution"
                 />
-                <meta name="author" content="Arbscreener" />
+                <meta name="author" content="Your Company" />
                 <meta name="robots" content="index, follow" />
                 <meta name="googlebot" content="index, follow" />
                 <meta name="bingbot" content="index, follow" />

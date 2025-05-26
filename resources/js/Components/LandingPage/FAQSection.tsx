@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import SectionHeading from './Shared/SectionHeading';
+import React, { useState } from "react";
+import SectionHeading from "./Shared/SectionHeading";
 
 interface FAQItem {
     question: string;
@@ -12,33 +12,35 @@ const FAQSection: React.FC = () => {
 
     const faqs: FAQItem[] = [
         {
-            question: "What is cryptocurrency arbitrage and how does Arbscreener help?",
-            answer: "Cryptocurrency arbitrage involves buying a digital asset on one exchange and selling it on another to profit from price differences. Arbscreener automatically scans 150+ exchanges in real-time to identify these profitable opportunities across spot markets, futures, and DEX platforms, saving you hours of manual research."
+            question: "What is this platform and how does it help my business?",
+            answer: "Our platform is a comprehensive solution that helps businesses streamline their operations through advanced analytics, automation, and real-time monitoring. It provides insights and tools to optimize your workflow, increase productivity, and make data-driven decisions.",
         },
         {
-            question: "How quickly does Arbscreener detect arbitrage opportunities?",
-            answer: "Our AI-powered system scans markets in real-time, typically detecting arbitrage opportunities within seconds of them appearing. You'll receive instant notifications via email, Telegram, or in-app alerts, ensuring you never miss a profitable trade."
+            question:
+                "How quickly can I see results after implementing the platform?",
+            answer: "Most users start seeing improvements within the first week of implementation. Our AI-powered system begins analyzing your data immediately, and you'll receive actionable insights and automated workflows that can boost efficiency from day one.",
         },
         {
-            question: "What types of arbitrage does Arbscreener support?",
-            answer: "Arbscreener supports three main types of arbitrage: Spot-to-Spot (price differences across centralized exchanges), Futures Arbitrage (differences between spot and futures markets), and DEX-to-DEX Arbitrage (opportunities within and between decentralized exchanges)."
+            question: "What types of integrations does the platform support?",
+            answer: "Our platform supports integrations with 20+ popular business tools including CRM systems, project management tools, communication platforms, and analytics services. We offer both pre-built integrations and custom API connections to fit your specific needs.",
         },
         {
-            question: "Do I need trading experience to use Arbscreener?",
-            answer: "While basic understanding of cryptocurrency trading is helpful, Arbscreener is designed to be user-friendly for traders of all levels. Our platform provides clear profit calculations, step-by-step trade instructions, and risk assessments to help you make informed decisions."
+            question: "Do I need technical expertise to use this platform?",
+            answer: "Not at all! Our platform is designed to be user-friendly for professionals of all technical levels. We provide intuitive dashboards, step-by-step guides, and comprehensive onboarding to help you get started quickly and effectively.",
         },
         {
-            question: "What exchanges and blockchains does Arbscreener monitor?",
-            answer: "We monitor 150+ exchanges including major CEXs like Binance, Coinbase, Kraken, and popular DEXs across multiple blockchains including Ethereum, BSC, Polygon, Arbitrum, and more. Our coverage is constantly expanding to include new exchanges and chains."
+            question: "What kind of support and training do you provide?",
+            answer: "We offer comprehensive support including 24/7 customer service, detailed documentation, video tutorials, and personalized onboarding sessions. Our team is always available to help you maximize the value of our platform.",
         },
         {
-            question: "How much profit can I expect from arbitrage trading?",
-            answer: "Profit potential varies based on market conditions, trade size, and execution speed. Our users typically find opportunities ranging from 0.5% to 5% profit margins, with some exceptional cases reaching higher percentages. Remember that profits depend on your capital, trading fees, and market timing."
+            question:
+                "How much can I expect to save or improve with this platform?",
+            answer: "Results vary based on your current processes and implementation, but our users typically see 20-40% improvements in efficiency, significant time savings on manual tasks, and better decision-making through data insights. ROI is usually realized within the first few months.",
         },
         {
-            question: "Are there any risks involved in arbitrage trading?",
-            answer: "Yes, arbitrage trading involves risks including price slippage, network congestion, exchange downtime, and withdrawal delays. Arbscreener helps minimize these risks by providing real-time market data, liquidity analysis, and risk assessments for each opportunity."
-        }
+            question: "Is my data secure and what about privacy?",
+            answer: "Yes, security and privacy are our top priorities. We use enterprise-grade encryption, comply with industry standards like GDPR and SOC 2, and implement strict access controls. Your data is always protected and never shared with third parties.",
+        },
     ];
 
     const toggleFAQ = (index: number) => {
@@ -54,7 +56,7 @@ const FAQSection: React.FC = () => {
                             Frequently Asked Questions
                         </span>
                     }
-                    subtitle="Everything you need to know about cryptocurrency arbitrage and Arbscreener"
+                    subtitle="Everything you need to know about our platform and how it can help your business"
                     subtitleClassName="text-gray-400"
                 />
 
@@ -77,7 +79,9 @@ const FAQSection: React.FC = () => {
                                 <div className="flex-shrink-0">
                                     <div
                                         className={`w-6 h-6 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center transition-transform duration-300 ${
-                                            openFAQ === index ? 'rotate-180' : ''
+                                            openFAQ === index
+                                                ? "rotate-180"
+                                                : ""
                                         }`}
                                     >
                                         <svg
@@ -96,12 +100,12 @@ const FAQSection: React.FC = () => {
                                     </div>
                                 </div>
                             </button>
-                            
+
                             <div
                                 className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                                    openFAQ === index 
-                                        ? 'max-h-96 opacity-100' 
-                                        : 'max-h-0 opacity-0'
+                                    openFAQ === index
+                                        ? "max-h-96 opacity-100"
+                                        : "max-h-0 opacity-0"
                                 }`}
                             >
                                 <div className="px-6 pb-5">
@@ -116,13 +120,18 @@ const FAQSection: React.FC = () => {
                 </div>
 
                 {/* Call to Action */}
-                <div className="mt-12 text-center" data-aos="fade-up" data-aos-delay="800">
+                <div
+                    className="mt-12 text-center"
+                    data-aos="fade-up"
+                    data-aos-delay="800"
+                >
                     <div className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 backdrop-blur-sm border border-indigo-500/30 rounded-xl p-8">
                         <h3 className="text-2xl font-bold text-white mb-4">
                             Still have questions?
                         </h3>
                         <p className="text-gray-300 mb-6">
-                            Our support team is here to help you get started with cryptocurrency arbitrage trading.
+                            Our support team is here to help you get started and
+                            make the most of our platform.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <a

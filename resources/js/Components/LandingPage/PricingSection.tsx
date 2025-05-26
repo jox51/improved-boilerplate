@@ -13,7 +13,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({
 }) => {
     // Pricing plans data
     const monthlyFeatures = [
-        "All Arbitrage Types",
+        "All Project Types",
         "Real-Time Alerts",
         "5 Exchange Connections",
         "Standard Support",

@@ -8,10 +8,10 @@ interface FinalCTASectionProps {
 }
 
 const FinalCTASection: React.FC<FinalCTASectionProps> = ({
-    headline = "Ready to Maximize Your Arbitrage Profits?",
+    headline = "Ready to Transform Your Workflow?",
     ctaText = "Start Your Free Trial",
-    ctaLink = "https://arbscreener.com/register",
-    subtext = "Join thousands of traders already using Arbscreener to discover profitable opportunities.",
+    ctaLink = "/register",
+    subtext = "Join thousands of professionals already using our platform to boost productivity and efficiency.",
 }) => {
     return (
         <section className="py-20 bg-gradient-to-br from-indigo-950/90 to-stone-900/90">

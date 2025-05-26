@@ -1,45 +1,47 @@
-import React from 'react';
-import ArbitrageOpportunityRow from './ArbitrageOpportunityRow';
-import TotalOpportunitiesDisplay from './TotalOpportunitiesDisplay';
+import React from "react";
+import ArbitrageOpportunityRow from "./ArbitrageOpportunityRow";
+import TotalOpportunitiesDisplay from "./TotalOpportunitiesDisplay";
 
 const LiveArbitrageCard: React.FC = () => {
     const opportunities = [
         {
-            pair: "BTC/USDT",
+            pair: "Analytics",
             pairColor: "text-orange-400",
-            fromExchange: "Binance",
-            toExchange: "Coinbase",
-            percentage: "+2.34%",
-            profit: "$1,247 profit"
+            fromExchange: "Dashboard",
+            toExchange: "Reports",
+            percentage: "+24.5%",
+            profit: "Efficiency gain",
         },
         {
-            pair: "ETH/USDT",
+            pair: "Automation",
             pairColor: "text-blue-400",
-            fromExchange: "Uniswap",
-            toExchange: "Kraken",
-            percentage: "+1.89%",
-            profit: "$892 profit"
+            fromExchange: "Workflows",
+            toExchange: "Tasks",
+            percentage: "+18.9%",
+            profit: "Time saved",
         },
         {
-            pair: "SOL/USDT",
+            pair: "Insights",
             pairColor: "text-purple-400",
-            fromExchange: "Raydium",
-            toExchange: "Bybit",
-            percentage: "+3.12%",
-            profit: "$2,156 profit"
-        }
+            fromExchange: "Data",
+            toExchange: "Actions",
+            percentage: "+31.2%",
+            profit: "Performance boost",
+        },
     ];
 
     return (
         <div className="trading-card rounded-2xl p-6 space-y-4">
             <div className="flex justify-between items-center border-b border-gray-700 pb-4">
-                <h3 className="text-xl font-bold text-green-400">Live Arbitrage Opportunities</h3>
+                <h3 className="text-xl font-bold text-green-400">
+                    Live Platform Insights
+                </h3>
                 <div className="flex items-center space-x-2">
                     <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                     <span className="text-green-400 text-sm">LIVE</span>
                 </div>
             </div>
-            
+
             <div className="space-y-3">
                 {opportunities.map((opportunity, index) => (
                     <ArbitrageOpportunityRow
@@ -53,10 +55,10 @@ const LiveArbitrageCard: React.FC = () => {
                     />
                 ))}
             </div>
-            
+
             <TotalOpportunitiesDisplay
-                amount="$47,293"
-                description="Total opportunities found today"
+                amount="47,293"
+                description="Total insights generated today"
             />
         </div>
     );

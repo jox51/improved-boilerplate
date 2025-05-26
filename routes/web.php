@@ -14,13 +14,17 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+
+
 Route::get('/', function () {
+    $appName = config('app.name', 'Awesome Project');
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
         'gtmId' => config('tag_manager.gtm_id'),
+        'appName' => $appName,
     ]);
 })->name('welcome');
 
