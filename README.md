@@ -22,18 +22,39 @@ A modern, feature-rich boilerplate for building web applications with Laravel an
 ## 📋 Prerequisites
 
 -   PHP >= 8.0
--   Node.js >= 16
+-   Node.js >= 18
 -   Composer
 -   MySQL
 -   Stripe CLI (for local development)
 
 ## 🛠️ Installation
 
+### Quick Start with CLI (Recommended)
+
+The fastest way to get started is using our CLI tool:
+
+```bash
+npx @jox51/my-boilerplate my-project-name
+```
+
+This will automatically:
+
+-   Clone the repository
+-   Set up the project structure
+-   Configure the `.env` file with your project name
+-   Provide step-by-step setup instructions
+
+After running the CLI, follow the colorful instructions to complete the setup!
+
+### Manual Installation
+
+Alternatively, you can set up the project manually:
+
 1. Clone the repository:
 
 ```bash
-git clone [your-repo-url]
-cd my-boilerplate
+git clone https://github.com/jox51/improved-boilerplate.git
+cd improved-boilerplate
 ```
 
 2. Install dependencies:
