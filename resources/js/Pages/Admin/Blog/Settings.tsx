@@ -1,0 +1,202 @@
+import { Head, useForm, router } from "@inertiajs/react";
+import { FormEventHandler, useRef, useState, useEffect } from "react";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import PrimaryButton from "@/Components/PrimaryButton";
+import SecondaryButton from "@/Components/SecondaryButton";
+import DangerButton from "@/Components/DangerButton";
+import InputError from "@/Components/InputError";
+import { PageProps } from "@/types";
+
+interface BlogSettingsProps extends PageProps {
+    bannerImageUrl?: string;
+    flash?: {
+        success?: boolean;
+        message?: string;
+        bannerImageUrl?: string;
+    };
+}
+
+export default function BlogSettings({ bannerImageUrl, flash }: BlogSettingsProps) {
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(bannerImageUrl || null);
+    const [isUploading, setIsUploading] = useState(false);
+    const [isRemoving, setIsRemoving] = useState(false);
+    const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+    const { data, setData, post, processing, errors, reset } = useForm({
+        banner_image: null as File | null,
+    });
+
+    // Handle flash messages
+    useEffect(() => {
+        if (flash?.message) {
+            setMessage({
+                type: flash.success ? 'success' : 'error',
+                text: flash.message
+            });
+            
+            if (flash.success && flash.bannerImageUrl) {
+                setPreviewUrl(flash.bannerImageUrl);
+            }
+        }
+    }, [flash]);
+
+    const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setData('banner_image', file);
+            
+            // Create preview URL
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                setPreviewUrl(e.target?.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const handleUpload: FormEventHandler = (e) => {
+        e.preventDefault();
+        
+        if (!data.banner_image) {
+            setMessage({ type: 'error', text: 'Please select an image to upload.' });
+            return;
+        }
+
+        setIsUploading(true);
+        setMessage(null);
+
+        router.post(route('blog.admin.settings.banner.upload'), {
+            banner_image: data.banner_image,
+        }, {
+            onSuccess: () => {
+                reset();
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                }
+            },
+            onError: (errors) => {
+                setMessage({ type: 'error', text: 'An error occurred while uploading the image.' });
+            },
+            onFinish: () => {
+                setIsUploading(false);
+            },
+        });
+    };
+
+    const handleRemove = () => {
+        setIsRemoving(true);
+        setMessage(null);
+
+        router.delete(route('blog.admin.settings.banner.remove'), {
+            onSuccess: () => {
+                setPreviewUrl(null);
+                reset();
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                }
+            },
+            onError: (errors) => {
+                setMessage({ type: 'error', text: 'An error occurred while removing the image.' });
+            },
+            onFinish: () => {
+                setIsRemoving(false);
+            },
+        });
+    };
+
+    return (
+        <AuthenticatedLayout
+            header={
+                <h2 className="text-xl font-semibold leading-tight text-gray-800">
+                    Blog Settings
+                </h2>
+            }
+        >
+            <Head title="Blog Settings" />
+
+            <div className="py-12">
+                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
+                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
+                        <div className="p-6 text-gray-900">
+                            <div className="mb-6">
+                                <h3 className="text-lg font-medium text-gray-900 mb-4">
+                                    Banner Image Settings
+                                </h3>
+                                <p className="text-sm text-gray-600 mb-6">
+                                    Upload a custom banner image for your blog index page. The image will be displayed as the background of the hero section.
+                                </p>
+
+                                {/* Message Display */}
+                                {message && (
+                                    <div className={`mb-4 p-4 rounded-md ${
+                                        message.type === 'success' 
+                                            ? 'bg-green-50 text-green-800 border border-green-200' 
+                                            : 'bg-red-50 text-red-800 border border-red-200'
+                                    }`}>
+                                        {message.text}
+                                    </div>
+                                )}
+
+                                {/* Current Banner Preview */}
+                                {previewUrl && (
+                                    <div className="mb-6">
+                                        <h4 className="text-sm font-medium text-gray-900 mb-2">
+                                            Current Banner Image
+                                        </h4>
+                                        <div className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden">
+                                            <img
+                                                src={previewUrl}
+                                                alt="Banner preview"
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Upload Form */}
+                                <form onSubmit={handleUpload} className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                                            Select Banner Image
+                                        </label>
+                                        <input
+                                            ref={fileInputRef}
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleFileSelect}
+                                            className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                        />
+                                        <p className="text-xs text-gray-500 mt-1">
+                                            Accepted formats: JPEG, PNG, JPG, GIF, WebP. Max size: 2MB.
+                                        </p>
+                                        <InputError message={errors.banner_image} className="mt-2" />
+                                    </div>
+
+                                    <div className="flex items-center space-x-4">
+                                        <PrimaryButton 
+                                            type="submit" 
+                                            disabled={isUploading || !data.banner_image}
+                                        >
+                                            {isUploading ? 'Uploading...' : 'Upload Banner'}
+                                        </PrimaryButton>
+
+                                        {previewUrl && (
+                                            <DangerButton
+                                                type="button"
+                                                onClick={handleRemove}
+                                                disabled={isRemoving}
+                                            >
+                                                {isRemoving ? 'Removing...' : 'Remove Banner'}
+                                            </DangerButton>
+                                        )}
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </AuthenticatedLayout>
+    );
+}

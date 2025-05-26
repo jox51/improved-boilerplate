@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+    <url>
+    <loc>http://localhost/blog2/welcome-to-our-new-blog</loc>
+    <lastmod>2025-05-26T13:25:08+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://localhost/blog2/getting-started-with-our-platform</loc>
+    <lastmod>2025-05-26T13:25:08+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://localhost/blog2/understanding-our-subscription-plans</loc>
+    <lastmod>2025-05-26T13:25:08+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://localhost/blog2/upcoming-features-and-improvements</loc>
+    <lastmod>2025-05-26T13:25:08+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://localhost/blog2/test-title</loc>
+    <lastmod>2025-05-26T16:27:45+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://localhost/blog2/unlocking-success-a-comprehensive-guide-to-topstep-copy-trading-for-new-traders</loc>
+    <lastmod>2025-05-26T18:50:21+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+    <url>
+    <loc>http://localhost/blog2/unlocking-the-power-of-tradovate-tradingview-a-comprehensive-guide-to-seamless-integration</loc>
+    <lastmod>2025-05-26T19:21:46+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+            </url>
+</urlset>
