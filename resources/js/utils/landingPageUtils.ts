@@ -3,6 +3,11 @@ import AOS from "aos"; // We'll address AOS import/setup below
 import "aos/dist/aos.css"; // Import AOS styles
 
 export const initAOS = () => {
+    if (typeof window === 'undefined') {
+        console.log('AOS initialization skipped on server-side');
+        return;
+    }
+    
     AOS.init({
         duration: 800,
         easing: "ease-in-out",
@@ -12,6 +17,11 @@ export const initAOS = () => {
 };
 
 export const initSmoothScroll = () => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+        console.log('Smooth scroll initialization skipped on server-side');
+        return;
+    }
+    
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener(
             "click",
@@ -33,6 +43,11 @@ export const initSmoothScroll = () => {
 };
 
 export const initNavbarScrollBehavior = (navElement: HTMLElement | null) => {
+    if (typeof window === 'undefined') {
+        console.log('Navbar scroll behavior initialization skipped on server-side');
+        return;
+    }
+    
     if (!navElement) return;
     let lastScrollY = window.scrollY;
     window.addEventListener("scroll", () => {
@@ -75,6 +90,11 @@ export const animateNumberTicker = (
 };
 
 export const observeAndAnimateTickers = () => {
+    if (typeof window === 'undefined' || typeof IntersectionObserver === 'undefined') {
+        console.log('Ticker animation initialization skipped on server-side');
+        return;
+    }
+    
     const tickers = document.querySelectorAll(".number-ticker");
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {

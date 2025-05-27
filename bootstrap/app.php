@@ -5,6 +5,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\Subscribed;
 use App\Http\Middleware\Admin;
+use App\Http\Middleware\VerifyCsrfToken;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,7 +20,8 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
         $middleware->validateCsrfTokens(except: [
             'stripe/*',
-            'blog2/webhook',
+            'blog/webhook',
+            VerifyCsrfToken::class,
         ]);
         $middleware->alias([
             'subscribed' => Subscribed::class,

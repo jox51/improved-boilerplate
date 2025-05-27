@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Head, Link } from "@inertiajs/react";
 import Layout from "@/Components/LandingPage/Layout";
 import { PageProps } from "@/types";
-import TagManager from "@sooro-io/react-gtm-module";
+import { trackSubscriptionSuccess } from "../../utils/gtmUtils";
 
 interface CheckoutSessionData {
     customer_email?: string;
@@ -26,12 +26,17 @@ export default function Success({
     phpVersion,
 }: SuccessPageProps) {
     useEffect(() => {
-        TagManager.dataLayer({
-            dataLayer: {
-                event: "subscriptionSuccess",
-            },
-        });
-    }, []);
+        // Track subscription success with available data
+        const planName = checkoutSession?.plan_description || "Unknown Plan";
+        const userId = checkoutSession?.customer_email; // Using email as user identifier
+        const additionalData = {
+            subscription_id: checkoutSession?.subscription_id,
+            status: checkoutSession?.status,
+            period_end_timestamp: checkoutSession?.period_end_timestamp,
+        };
+        
+        trackSubscriptionSuccess(planName, userId, additionalData);
+    }, [checkoutSession]);
 
     const formatDate = (timestamp?: number) => {
         if (!timestamp) return "";

@@ -19,11 +19,11 @@ class Admin
         // Debug logging
         Log::info('Admin Middleware Check', [
             'user_email' => $request->user()->email ?? 'no user',
-            'condition_result' => !$request->user()->email === 'test1@test.com',
-            'correct_condition_result' => $request->user()->email !== 'test1@test.com',
+            'admin_users' => config('admin.users'),
+            'is_admin' => in_array($request->user()->email, config('admin.users')),
         ]);
         
-        if ($request->user()->email !== 'test1@test.com') {
+        if (!in_array($request->user()->email, config('admin.users'))) {
             Log::info('Admin Middleware: Redirecting user to home');
             // Redirect user to billing page and ask them to subscribe...
             return redirect('/');

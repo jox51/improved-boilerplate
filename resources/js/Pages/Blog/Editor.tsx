@@ -120,11 +120,13 @@ export default function BlogEditor({ slug, post: initialPost, allCategories = []
         setFeaturedImage(null);
         setFeaturedImagePreview(null);
         // Reset file input
-        const fileInput = document.getElementById(
-            "featured_image"
-        ) as HTMLInputElement;
-        if (fileInput) {
-            fileInput.value = "";
+        if (typeof document !== 'undefined') {
+            const fileInput = document.getElementById(
+                "featured_image"
+            ) as HTMLInputElement;
+            if (fileInput) {
+                fileInput.value = "";
+            }
         }
     };
 

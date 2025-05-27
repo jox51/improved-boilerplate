@@ -75,13 +75,21 @@ export default function EnhancedPagination({
 
     const getPageUrl = (page: number): string => {
         if (baseUrl) {
-            const url = new URL(baseUrl, window.location.origin);
-            url.searchParams.set("page", page.toString());
-            return url.toString();
+            // SSR-safe URL construction
+            if (typeof window !== 'undefined') {
+                const url = new URL(baseUrl, window.location.origin);
+                url.searchParams.set("page", page.toString());
+                return url.toString();
+            } else {
+                // SSR fallback: construct relative URL
+                const url = new URL(baseUrl, 'http://localhost');
+                url.searchParams.set("page", page.toString());
+                return url.pathname + url.search;
+            }
         }
         
         // Fallback: try to construct URL from existing links
-        const pageLink = links.find(link => 
+        const pageLink = links.find(link =>
             link.label === page.toString() && link.url
         );
         
@@ -89,10 +97,15 @@ export default function EnhancedPagination({
             return pageLink.url;
         }
         
-        // Last fallback: use current URL with page parameter
-        const currentUrl = new URL(window.location.href);
-        currentUrl.searchParams.set("page", page.toString());
-        return currentUrl.toString();
+        // Last fallback: use current URL with page parameter (SSR-safe)
+        if (typeof window !== 'undefined') {
+            const currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.set("page", page.toString());
+            return currentUrl.toString();
+        } else {
+            // SSR fallback: return relative URL with page parameter
+            return `?page=${page}`;
+        }
     };
 
     const handleJumpToPage = (e: FormEvent) => {

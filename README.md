@@ -7,6 +7,8 @@ A modern, feature-rich boilerplate for building web applications with Laravel an
 -   **Laravel & React** - Modern full-stack framework combination
 -   **Custom Blogging System** - Built-in blog with Laravel backend and React/Inertia.js frontend
     -   Admin dashboard for managing posts, categories, and blog settings
+    -   Protected admin routes. Add admin email to `config/admin.php` and `ADMIN_USER` environment variable
+    -   Access dashboard at `admin/dashboard`
     -   Rich text editor for creating and editing posts
     -   Category management with hierarchical organization
     -   Customizable public blog layout with sidebar (categories, recent posts, social links)
@@ -151,7 +153,7 @@ INSTAGRAM_URL=https://instagram.com/youraccount
 LINKEDIN_URL=https://linkedin.com/in/yourprofile
 ```
 
-3. **Blog Administration**: Access the blog admin dashboard at `/admin/blog/dashboard` (requires admin privileges)
+3. **Blog Administration**: Access the blog admin dashboard at `/admin/dashboard` (requires admin privileges)
 
     - Manage blog posts and categories
     - Configure blog settings and banner images

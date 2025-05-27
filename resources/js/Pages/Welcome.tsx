@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
-import TagManager from "@sooro-io/react-gtm-module";
 import Layout from "@/Components/LandingPage/Layout";
 import HeroSection from "@/Components/LandingPage/HeroSection";
 import FeaturesSection from "@/Components/LandingPage/FeaturesSection";
@@ -15,6 +14,7 @@ import {
     initSmoothScroll,
     observeAndAnimateTickers,
 } from "@/utils/landingPageUtils";
+import { initializeGTM } from "@/utils/gtmUtils";
 
 export default function Welcome({
     auth,
@@ -33,11 +33,8 @@ export default function Welcome({
         initSmoothScroll();
         observeAndAnimateTickers();
 
-        TagManager.initialize({
-            gtmId: gtmId,
-            dataLayer: {
-                pageType: "welcomePageLoad",
-            },
+        initializeGTM(gtmId, {
+            pageType: "welcomePageLoad",
         });
     }, []);
 

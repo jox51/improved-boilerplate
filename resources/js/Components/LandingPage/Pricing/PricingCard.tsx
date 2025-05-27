@@ -1,7 +1,7 @@
 import React from "react";
 import PlanFeatureListItem from "./PlanFeatureListItem";
 import { Link } from "@inertiajs/react";
-import TagManager from "@sooro-io/react-gtm-module";
+import { trackButtonClick } from "../../../utils/gtmUtils";
 
 interface PricingCardProps {
     planName: string;
@@ -64,25 +64,9 @@ const PricingCard: React.FC<PricingCardProps> = ({
     // Determine button text and link based on authentication and subscription status
     const getButtonText = () => {
         if (isUserSubscribed) {
-            TagManager.dataLayer({
-                dataLayer: {
-                    event: "buttonClick",
-                    buttonName: "goToApp",
-                    buttonLocation: "pricing",
-                    userStatus: isAuthenticated ? "authenticated" : "visitor",
-                },
-            });
             return "Go to App";
         }
         if (!isAuthenticated) {
-            TagManager.dataLayer({
-                dataLayer: {
-                    event: "buttonClick",
-                    buttonName: "signUp",
-                    buttonLocation: "pricing",
-                    userStatus: "visitor",
-                },
-            });
             return "Sign Up to Subscribe";
         }
         return buttonText;
@@ -140,13 +124,22 @@ const PricingCard: React.FC<PricingCardProps> = ({
                 href={actualButtonLink}
                 className={buttonClasses}
                 onClick={() => {
-                    TagManager.dataLayer({
-                        dataLayer: {
-                            event: "buttonClick",
-                            buttonName: "register",
-                            buttonLocation: "hero",
-                            userStatus: "visitor",
-                        },
+                    // Determine appropriate button name based on user state
+                    let buttonName = "select_plan";
+                    if (isUserSubscribed) {
+                        buttonName = "go_to_app";
+                    } else if (!isAuthenticated) {
+                        buttonName = "sign_up_to_subscribe";
+                    } else {
+                        buttonName = `select_plan_${planName.toLowerCase().replace(/\s+/g, '_')}`;
+                    }
+                    
+                    trackButtonClick(buttonName, {
+                        button_location: "pricing",
+                        plan_name: planName,
+                        plan_price: price,
+                        user_status: isAuthenticated ? "authenticated" : "visitor",
+                        user_subscribed: isUserSubscribed,
                     });
                 }}
             >
