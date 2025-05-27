@@ -107,6 +107,7 @@ Route::middleware(['auth', 'verified', 'admin'])->prefix($blogAdminPath)->name('
     Route::get('/settings', [BlogSettingsController::class, 'index'])->name('settings');
     Route::post('/settings/banner-upload', [BlogSettingsController::class, 'uploadBanner'])->name('settings.banner.upload');
     Route::delete('/settings/banner', [BlogSettingsController::class, 'removeBanner'])->name('settings.banner.remove');
+    Route::put('/settings/theme', [BlogSettingsController::class, 'updateTheme'])->name('settings.updateTheme');
 });
 
 /*

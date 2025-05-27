@@ -9,6 +9,19 @@ import { PageProps } from "@/types";
 
 interface BlogSettingsProps extends PageProps {
     bannerImageUrl?: string;
+    currentThemePaletteId: string;
+    availableThemes: {
+        [key: string]: {
+            name: string;
+            colors: {
+                primary: string;
+                secondary: string;
+                accent: string;
+                neutral: string;
+                base: string;
+            };
+        };
+    };
     flash?: {
         success?: boolean;
         message?: string;
@@ -16,12 +29,14 @@ interface BlogSettingsProps extends PageProps {
     };
 }
 
-export default function BlogSettings({ bannerImageUrl, flash }: BlogSettingsProps) {
+export default function BlogSettings({ bannerImageUrl, currentThemePaletteId, availableThemes, flash }: BlogSettingsProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [previewUrl, setPreviewUrl] = useState<string | null>(bannerImageUrl || null);
     const [isUploading, setIsUploading] = useState(false);
     const [isRemoving, setIsRemoving] = useState(false);
     const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+    const [selectedTheme, setSelectedTheme] = useState<string>(currentThemePaletteId);
+    const [isSavingTheme, setIsSavingTheme] = useState(false);
 
     const { data, setData, post, processing, errors, reset } = useForm({
         banner_image: null as File | null,
@@ -101,6 +116,25 @@ export default function BlogSettings({ bannerImageUrl, flash }: BlogSettingsProp
             },
             onFinish: () => {
                 setIsRemoving(false);
+            },
+        });
+    };
+
+    const handleThemeSave = () => {
+        setIsSavingTheme(true);
+        setMessage(null);
+
+        router.put(route('blog.admin.settings.updateTheme'), {
+            theme_palette_id: selectedTheme,
+        }, {
+            onSuccess: () => {
+                setMessage({ type: 'success', text: 'Blog theme updated successfully!' });
+            },
+            onError: (errors) => {
+                setMessage({ type: 'error', text: 'An error occurred while updating the theme.' });
+            },
+            onFinish: () => {
+                setIsSavingTheme(false);
             },
         });
     };
@@ -192,6 +226,82 @@ export default function BlogSettings({ bannerImageUrl, flash }: BlogSettingsProp
                                         )}
                                     </div>
                                 </form>
+                            </div>
+
+                            {/* Theme Selector Section */}
+                            <div className="mt-8 pt-8 border-t border-gray-200">
+                                <h3 className="text-lg font-medium text-gray-900 mb-4">
+                                    Blog Theme
+                                </h3>
+                                <p className="text-sm text-gray-600 mb-6">
+                                    Choose a color palette for your blog. The selected theme will be applied to all public blog pages.
+                                </p>
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                                    {Object.entries(availableThemes).map(([paletteId, theme]) => (
+                                        <div
+                                            key={paletteId}
+                                            onClick={() => setSelectedTheme(paletteId)}
+                                            className={`relative p-4 rounded-lg border-2 cursor-pointer transition-all hover:shadow-md ${
+                                                selectedTheme === paletteId
+                                                    ? 'border-blue-500 bg-blue-50'
+                                                    : 'border-gray-200 hover:border-gray-300'
+                                            }`}
+                                        >
+                                            {/* Theme Name */}
+                                            <h4 className="font-medium text-gray-900 mb-3">
+                                                {theme.name}
+                                            </h4>
+
+                                            {/* Color Palette */}
+                                            <div className="flex space-x-2 mb-3">
+                                                {Object.entries(theme.colors).map(([colorName, colorValue]) => (
+                                                    <div
+                                                        key={colorName}
+                                                        className="w-8 h-8 rounded-full border border-gray-300 shadow-sm"
+                                                        style={{ backgroundColor: colorValue }}
+                                                        title={`${colorName}: ${colorValue}`}
+                                                    />
+                                                ))}
+                                            </div>
+
+                                            {/* Selection Indicator */}
+                                            {selectedTheme === paletteId && (
+                                                <div className="absolute top-2 right-2">
+                                                    <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+                                                        <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                                            <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                                        </svg>
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                            {/* Current Theme Indicator */}
+                                            {currentThemePaletteId === paletteId && selectedTheme !== paletteId && (
+                                                <div className="absolute top-2 right-2">
+                                                    <div className="px-2 py-1 bg-gray-500 text-white text-xs rounded">
+                                                        Current
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Save Theme Button */}
+                                <div className="flex items-center">
+                                    <PrimaryButton
+                                        onClick={handleThemeSave}
+                                        disabled={isSavingTheme || selectedTheme === currentThemePaletteId}
+                                    >
+                                        {isSavingTheme ? 'Saving Theme...' : 'Save Theme'}
+                                    </PrimaryButton>
+                                    {selectedTheme === currentThemePaletteId && (
+                                        <span className="ml-3 text-sm text-gray-500">
+                                            This theme is already active
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>

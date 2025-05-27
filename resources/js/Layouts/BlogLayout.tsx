@@ -21,7 +21,7 @@ export default function BlogLayout({
 }: BlogLayoutProps) {
     const { appName } = usePage<PageProps>().props;
     return (
-        <div className="min-h-screen bg-slate-50">
+        <div className="blog-theme-active min-h-screen bg-slate-50">
             <BlogNavigation />
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

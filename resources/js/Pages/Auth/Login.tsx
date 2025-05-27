@@ -1,11 +1,11 @@
-import Checkbox from '@/Components/Checkbox';
-import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
-import { Head, Link, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
-import Logo from '../../../images/logo.png';
+import Checkbox from "@/Components/Checkbox";
+import InputError from "@/Components/InputError";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
+import { FormEventHandler } from "react";
+import Logo from "../../../images/logo.png";
 
 export default function Login({
     status,
@@ -15,36 +15,37 @@ export default function Login({
     canResetPassword: boolean;
 }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
+        email: "",
+        password: "",
         remember: false as boolean,
     });
+    const { appName } = usePage().props;
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route('login'), {
-            onFinish: () => reset('password'),
+        post(route("login"), {
+            onFinish: () => reset("password"),
         });
     };
 
     return (
         <div className="min-h-screen bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
             <Head title="Log in" />
-            
+
             <div className="sm:mx-auto sm:w-full sm:max-w-md">
                 {/* Logo and Brand */}
                 <div className="flex flex-col items-center">
                     <img
                         src={Logo}
-                        alt="Arbscreener"
+                        alt={appName}
                         className="w-20 h-20 object-contain mb-4"
                     />
                     <Link
                         href="/"
                         className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2"
                     >
-                        Arbscreener
+                        {appName}
                     </Link>
                     <p className="text-gray-400 text-sm text-center">
                         Sign in to your account
@@ -76,10 +77,15 @@ export default function Login({
                                     className="block w-full bg-gray-700/50 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm"
                                     autoComplete="username"
                                     isFocused={true}
-                                    onChange={(e) => setData('email', e.target.value)}
+                                    onChange={(e) =>
+                                        setData("email", e.target.value)
+                                    }
                                 />
                             </div>
-                            <InputError message={errors.email} className="mt-2 text-red-400" />
+                            <InputError
+                                message={errors.email}
+                                className="mt-2 text-red-400"
+                            />
                         </div>
 
                         <div>
@@ -96,10 +102,15 @@ export default function Login({
                                     value={data.password}
                                     className="block w-full bg-gray-700/50 border-gray-600 text-gray-100 placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm"
                                     autoComplete="current-password"
-                                    onChange={(e) => setData('password', e.target.value)}
+                                    onChange={(e) =>
+                                        setData("password", e.target.value)
+                                    }
                                 />
                             </div>
-                            <InputError message={errors.password} className="mt-2 text-red-400" />
+                            <InputError
+                                message={errors.password}
+                                className="mt-2 text-red-400"
+                            />
                         </div>
 
                         <div className="flex items-center justify-between">
@@ -109,13 +120,16 @@ export default function Login({
                                     checked={data.remember}
                                     onChange={(e) =>
                                         setData(
-                                            'remember',
-                                            (e.target.checked || false) as false,
+                                            "remember",
+                                            (e.target.checked || false) as false
                                         )
                                     }
                                     className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-600 rounded bg-gray-700"
                                 />
-                                <label htmlFor="remember" className="ml-2 block text-sm text-gray-300">
+                                <label
+                                    htmlFor="remember"
+                                    className="ml-2 block text-sm text-gray-300"
+                                >
                                     Remember me
                                 </label>
                             </div>
@@ -123,7 +137,7 @@ export default function Login({
                             {canResetPassword && (
                                 <div className="text-sm">
                                     <Link
-                                        href={route('password.request')}
+                                        href={route("password.request")}
                                         className="text-blue-400 hover:text-blue-300 transition-colors duration-200"
                                     >
                                         Forgot your password?
@@ -137,7 +151,7 @@ export default function Login({
                                 className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                                 disabled={processing}
                             >
-                                {processing ? 'Signing in...' : 'Sign in'}
+                                {processing ? "Signing in..." : "Sign in"}
                             </PrimaryButton>
                         </div>
                     </form>

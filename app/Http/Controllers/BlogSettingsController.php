@@ -19,9 +19,15 @@ class BlogSettingsController extends Controller
     {
         $bannerImagePath = BlogSetting::get('banner_image_path');
         $bannerImageUrl = $bannerImagePath ? asset('storage/' . $bannerImagePath) : null;
+        
+        // Get current theme palette ID and available themes
+        $currentThemePaletteId = BlogSetting::get('blog_theme_palette_id', 'palette_1');
+        $availableThemes = config('blog_themes');
 
         return Inertia::render('Admin/Blog/Settings', [
             'bannerImageUrl' => $bannerImageUrl,
+            'currentThemePaletteId' => $currentThemePaletteId,
+            'availableThemes' => $availableThemes,
         ]);
     }
 
@@ -89,6 +95,43 @@ class BlogSettingsController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->withErrors([
                 'banner_image' => 'Failed to remove banner image: ' . $e->getMessage(),
+            ]);
+        }
+    }
+
+    /**
+     * Update the blog theme palette.
+     */
+    public function updateTheme(Request $request): RedirectResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'theme_palette_id' => [
+                'required',
+                'string',
+                function ($attribute, $value, $fail) {
+                    $availableThemes = config('blog_themes');
+                    if (!array_key_exists($value, $availableThemes)) {
+                        $fail('The selected theme palette is invalid.');
+                    }
+                },
+            ],
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator->errors());
+        }
+
+        try {
+            // Update the theme setting
+            BlogSetting::set('blog_theme_palette_id', $request->input('theme_palette_id'));
+
+            return redirect()->route('blog.admin.settings')->with([
+                'success' => true,
+                'message' => 'Blog theme updated successfully',
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors([
+                'theme_palette_id' => 'Failed to update theme: ' . $e->getMessage(),
             ]);
         }
     }

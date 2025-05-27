@@ -12,6 +12,15 @@ export default {
 
     theme: {
         extend: {
+            colors: {
+                blog: {
+                    primary: 'var(--blog-color-primary)',
+                    secondary: 'var(--blog-color-secondary)',
+                    accent: 'var(--blog-color-accent)',
+                    neutral: 'var(--blog-color-neutral)',
+                    base: 'var(--blog-color-base)',
+                }
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
