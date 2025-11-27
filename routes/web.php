@@ -11,6 +11,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\StripeWebhookController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\WhopController;
+use App\Http\Controllers\WhopWebhookController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +32,7 @@ Route::get('/', function () {
         'paymentProviders' => [
             'stripe_enabled' => config('payment.providers.stripe.enabled', true),
             'paypal_enabled' => config('payment.providers.paypal.enabled', false),
+            'whop_enabled' => config('payment.providers.whop.enabled', false),
             'default' => config('payment.default', 'stripe'),
         ],
     ]);
@@ -55,6 +58,9 @@ Route::post('stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])
 
 Route::post('paypal/webhook', [PayPalWebhookController::class, 'handleWebhook'])
     ->name('paypal.webhook');
+
+Route::post('whop/webhook', [WhopWebhookController::class, 'handleWebhook'])
+    ->name('whop.webhook');
 
     // Blog routes
 $blogBasePath = config('blog.base_path', 'blog');
@@ -89,6 +95,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/paypal/subscription-success', [PayPalController::class, 'subscriptionSuccess'])->name('paypal.subscription.success');
     Route::get('/paypal/subscription-cancel', [PayPalController::class, 'subscriptionCancel'])->name('paypal.subscription.cancel');
     Route::get('/paypal/billing-portal', [PayPalController::class, 'redirectToBillingPortal'])->name('paypal.billing.portal');
+
+    // Whop subscription routes
+    Route::get('/subscribe/whop/{planType}', [WhopController::class, 'createSubscription'])->name('whop.subscribe.checkout');
+    Route::get('/whop/subscription-success', [WhopController::class, 'subscriptionSuccess'])->name('whop.subscription.success');
+    Route::get('/whop/subscription-cancel', [WhopController::class, 'subscriptionCancel'])->name('whop.subscription.cancel');
+    Route::get('/whop/billing-portal', [WhopController::class, 'redirectToBillingPortal'])->name('whop.billing.portal');
 
     // Legacy Stripe checkout routes (keeping for backward compatibility)
     Route::get('/checkout/{plan}', [StripeController::class, 'checkout'])->name('checkout');

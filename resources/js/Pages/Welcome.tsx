@@ -31,6 +31,7 @@ export default function Welcome({
     paymentProviders: {
         stripe_enabled: boolean;
         paypal_enabled: boolean;
+        whop_enabled: boolean;
         default: string;
     };
 }>) {
@@ -105,8 +106,9 @@ export default function Welcome({
                         }
                         stripeEnabled={paymentProviders.stripe_enabled}
                         paypalEnabled={paymentProviders.paypal_enabled}
+                        whopEnabled={paymentProviders.whop_enabled}
                         defaultPaymentProvider={
-                            paymentProviders.default as "stripe" | "paypal"
+                            paymentProviders.default as "stripe" | "paypal" | "whop"
                         }
                     />
 

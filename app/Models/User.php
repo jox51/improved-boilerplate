@@ -29,6 +29,7 @@ class User extends Authenticatable
         'paypal_subscription_id',
         'paypal_payer_id',
         'paypal_subscription_ends_at',
+        'whop_payment_id',
     ];
 
     /**

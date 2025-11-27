@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->validateCsrfTokens(except: [
             'stripe/*',
             'paypal/*',
+            'whop/*',
             'blog/webhook',
             VerifyCsrfToken::class,
         ]);

@@ -26,7 +26,7 @@ interface PricingCardProps {
     hasProfitGlow?: boolean;
     isAuthenticated: boolean;
     isUserSubscribed: boolean;
-    paymentProvider?: "stripe" | "paypal";
+    paymentProvider?: "stripe" | "paypal" | "whop";
 }
 
 const PricingCard: React.FC<PricingCardProps> = ({
@@ -83,6 +83,9 @@ const PricingCard: React.FC<PricingCardProps> = ({
         }
         if (paymentProvider === "paypal") {
             return `/subscribe/paypal/${buttonLink}`;
+        }
+        if (paymentProvider === "whop") {
+            return `/subscribe/whop/${buttonLink}`;
         }
         return `/subscribe/${buttonLink}`;
     };

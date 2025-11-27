@@ -61,5 +61,12 @@ return [
             'currency' => env('PAYPAL_CURRENCY', 'USD'),
             'locale' => env('PAYPAL_LOCALE', 'en_US'),
         ],
+
+        'whop' => [
+            'enabled' => env('WHOP_ENABLED', false),
+            'monthly_plan_id' => env('WHOP_MONTHLY_PLAN_ID', ''),
+            'yearly_plan_id' => env('WHOP_YEARLY_PLAN_ID', ''),
+            'webhook_secret' => env('WHOP_WEBHOOK_SECRET', ''),
+        ],
     ],
 ];
