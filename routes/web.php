@@ -27,6 +27,11 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
         'gtmId' => config('tag_manager.gtm_id'),
         'appName' => $appName,
+        'paymentProviders' => [
+            'stripe_enabled' => config('payment.providers.stripe.enabled', true),
+            'paypal_enabled' => config('payment.providers.paypal.enabled', false),
+            'default' => config('payment.default', 'stripe'),
+        ],
     ]);
 })->name('welcome');
 

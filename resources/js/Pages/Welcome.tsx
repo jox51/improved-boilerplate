@@ -22,11 +22,17 @@ export default function Welcome({
     phpVersion,
     gtmId,
     appName,
+    paymentProviders,
 }: PageProps<{
     laravelVersion: string;
     phpVersion: string;
     gtmId: string;
     appName: string;
+    paymentProviders: {
+        stripe_enabled: boolean;
+        paypal_enabled: boolean;
+        default: string;
+    };
 }>) {
     useEffect(() => {
         initAOS();
@@ -96,6 +102,11 @@ export default function Welcome({
                         isAuthenticated={!!auth.user}
                         isUserSubscribed={
                             auth.user?.has_active_subscription || false
+                        }
+                        stripeEnabled={paymentProviders.stripe_enabled}
+                        paypalEnabled={paymentProviders.paypal_enabled}
+                        defaultPaymentProvider={
+                            paymentProviders.default as "stripe" | "paypal"
                         }
                     />
 

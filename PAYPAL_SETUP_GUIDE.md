@@ -251,17 +251,38 @@ PayPal provides test accounts in sandbox mode:
 
 ## Switching Providers
 
+### Enabling/Disabling Providers
+
+Control which payment providers are available in your `.env` file:
+
+```env
+# Enable/disable individual providers
+STRIPE_ENABLED=true   # Set to false to disable Stripe
+PAYPAL_ENABLED=true   # Set to false to disable PayPal
+
+# Set the default provider (used when both are enabled)
+PAYMENT_PROVIDER=stripe  # or 'paypal'
+```
+
+**Frontend Behavior:**
+- **Both enabled**: Toggle buttons appear on pricing page, users can choose
+- **Only Stripe enabled**: Only Stripe checkout, no toggle shown
+- **Only PayPal enabled**: Only PayPal checkout, no toggle shown
+- **Both disabled**: Defaults to Stripe (fallback behavior)
+
 ### Default Provider
 
-Set in `.env`:
+When both providers are enabled, set the default in `.env`:
 
 ```env
 PAYMENT_PROVIDER=paypal  # Changes default for entire app
 ```
 
+This determines which provider is pre-selected on the pricing page.
+
 ### Per-User Selection
 
-Users choose provider on pricing page - selection is temporary and only affects that checkout session.
+When both providers are enabled, users can choose their preferred provider on the pricing page via the toggle buttons. The selection only affects that specific checkout session.
 
 ### Provider-Specific Data
 
