@@ -26,6 +26,7 @@ interface PricingCardProps {
     hasProfitGlow?: boolean;
     isAuthenticated: boolean;
     isUserSubscribed: boolean;
+    paymentProvider?: "stripe" | "paypal";
 }
 
 const PricingCard: React.FC<PricingCardProps> = ({
@@ -51,6 +52,7 @@ const PricingCard: React.FC<PricingCardProps> = ({
     hasProfitGlow = false,
     isAuthenticated,
     isUserSubscribed,
+    paymentProvider = "stripe",
 }) => {
     const cardClasses =
         isPopular && gradientFrom && gradientTo
@@ -78,6 +80,9 @@ const PricingCard: React.FC<PricingCardProps> = ({
         }
         if (!isAuthenticated) {
             return "/register";
+        }
+        if (paymentProvider === "paypal") {
+            return `/subscribe/paypal/${buttonLink}`;
         }
         return `/subscribe/${buttonLink}`;
     };

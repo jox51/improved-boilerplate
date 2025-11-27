@@ -25,6 +25,10 @@ class User extends Authenticatable
         'email',
         'password',
         'subscription_status',
+        'payment_provider',
+        'paypal_subscription_id',
+        'paypal_payer_id',
+        'paypal_subscription_ends_at',
     ];
 
     /**
@@ -76,6 +80,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'paypal_subscription_ends_at' => 'datetime',
         ];
     }
 

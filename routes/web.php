@@ -5,6 +5,8 @@ use App\Http\Controllers\ArvowWebhookController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\BlogSettingsController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PayPalController;
+use App\Http\Controllers\PayPalWebhookController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\StripeWebhookController;
@@ -46,6 +48,9 @@ Route::get('/contact-us', function () {
 Route::post('stripe/webhook', [StripeWebhookController::class, 'handleWebhook'])
     ->name('cashier.webhook');
 
+Route::post('paypal/webhook', [PayPalWebhookController::class, 'handleWebhook'])
+    ->name('paypal.webhook');
+
     // Blog routes
 $blogBasePath = config('blog.base_path', 'blog');
 $blogAdminPath = config('blog.admin_path', 'admin');
@@ -67,12 +72,18 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Subscription routes
+    // Stripe subscription routes
     Route::get('/subscribe/{planType}', [SubscriptionController::class, 'createCheckoutSession'])->name('subscribe.checkout');
     Route::get('/subscription-success', [SubscriptionController::class, 'subscriptionSuccess'])->name('subscription.success');
     Route::get('/subscription-cancel', [SubscriptionController::class, 'subscriptionCancel'])->name('subscription.cancel');
     Route::get('/billing', [SubscriptionController::class, 'showBillingInformation'])->name('billing.show');
     Route::get('/billing-portal', [SubscriptionController::class, 'redirectToBillingPortal'])->name('billing.portal');
+
+    // PayPal subscription routes
+    Route::get('/subscribe/paypal/{planType}', [PayPalController::class, 'createSubscription'])->name('paypal.subscribe.checkout');
+    Route::get('/paypal/subscription-success', [PayPalController::class, 'subscriptionSuccess'])->name('paypal.subscription.success');
+    Route::get('/paypal/subscription-cancel', [PayPalController::class, 'subscriptionCancel'])->name('paypal.subscription.cancel');
+    Route::get('/paypal/billing-portal', [PayPalController::class, 'redirectToBillingPortal'])->name('paypal.billing.portal');
 
     // Legacy Stripe checkout routes (keeping for backward compatibility)
     Route::get('/checkout/{plan}', [StripeController::class, 'checkout'])->name('checkout');
