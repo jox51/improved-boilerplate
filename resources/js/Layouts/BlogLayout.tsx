@@ -21,10 +21,17 @@ export default function BlogLayout({
 }: BlogLayoutProps) {
     const { appName } = usePage<PageProps>().props;
     return (
-        <div className="blog-theme-active min-h-screen bg-slate-50">
+        <div className="nebula-blog min-h-screen bg-slate-950 text-slate-200 selection:bg-teal-500/30 selection:text-teal-200">
+
+            {/* Background Gradients */}
+            <div className="fixed inset-0 z-0 pointer-events-none">
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-teal-900/20 rounded-full blur-[128px]" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-cyan-900/10 rounded-full blur-[128px]" />
+            </div>
+
             <BlogNavigation />
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
                 <div
                     className={`flex gap-12 ${
                         showSidebar ? "lg:flex-row" : ""
@@ -55,11 +62,11 @@ export default function BlogLayout({
             </div>
 
             {/* Footer */}
-            <footer className="bg-white border-t border-slate-200 mt-16">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                    <div className="text-center text-slate-600">
-                        <p>&copy; 2025 {appName}. All rights reserved.</p>
-                    </div>
+            <footer className="border-t border-slate-800 py-12 mt-12 bg-slate-950 relative z-10">
+                <div className="max-w-7xl mx-auto px-4 text-center">
+                    <p className="text-slate-500 text-sm">
+                        &copy; 2025 {appName}. All rights reserved.
+                    </p>
                 </div>
             </footer>
         </div>

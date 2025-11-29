@@ -1,7 +1,8 @@
 import { Head, Link, usePage } from "@inertiajs/react";
 import { BlogPost, PageProps, Category } from "@/types";
 import BlogLayout from "@/Layouts/BlogLayout";
-import { useEffect } from "react";
+import { motion } from "framer-motion";
+import { ArrowLeft, Calendar, Clock, User, Share2 } from "lucide-react";
 
 interface BlogShowProps extends PageProps {
     slug: string;
@@ -16,13 +17,6 @@ interface BlogShowProps extends PageProps {
 export default function BlogShow() {
     const { props } = usePage<BlogShowProps>();
     const { post, slug, blog_base_path, sidebarData, appName } = props;
-
-    useEffect(() => {
-        if (post) {
-            console.log("Blog post data:", post);
-            console.log("Featured image URL:", post?.featured_image_path);
-        }
-    }, [post]);
 
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString("en-US", {
@@ -40,7 +34,7 @@ export default function BlogShow() {
                     <div className="text-center py-16">
                         <div className="max-w-md mx-auto">
                             <svg
-                                className="mx-auto h-16 w-16 text-slate-400"
+                                className="mx-auto h-16 w-16 text-slate-600"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -52,31 +46,19 @@ export default function BlogShow() {
                                     d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                                 />
                             </svg>
-                            <h1 className="mt-4 text-2xl font-bold text-slate-900">
+                            <h1 className="mt-4 text-2xl font-bold text-slate-100">
                                 Post Not Found
                             </h1>
-                            <p className="mt-2 text-slate-600">
+                            <p className="mt-2 text-slate-400">
                                 The blog post you are looking for does not exist
                                 or has been removed.
                             </p>
                             <div className="mt-6">
                                 <Link
                                     href={`/${blog_base_path}`}
-                                    className="inline-flex items-center px-6 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors duration-200 font-medium"
+                                    className="inline-flex items-center px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-500 transition-colors duration-200 font-medium shadow-lg shadow-teal-500/20"
                                 >
-                                    <svg
-                                        className="mr-2 w-4 h-4"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={2}
-                                            d="M15 19l-7-7 7-7"
-                                        />
-                                    </svg>
+                                    <ArrowLeft className="mr-2 w-4 h-4" />
                                     Back to Blog
                                 </Link>
                             </div>
@@ -98,188 +80,137 @@ export default function BlogShow() {
                 )}
             </Head>
 
-            <div className="py-8">
-                {/* Back to blog link */}
-                <div className="mb-8">
-                    <Link
-                        href={`/${blog_base_path}`}
-                        className="inline-flex items-center text-slate-600 hover:text-slate-800 font-medium transition-colors duration-200"
-                    >
-                        <svg
-                            className="mr-2 w-4 h-4"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M15 19l-7-7 7-7"
-                            />
-                        </svg>
-                        Back to Blog
-                    </Link>
-                </div>
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                className="max-w-4xl mx-auto"
+            >
+                {/* Back Button */}
+                <Link
+                    href={`/${blog_base_path}`}
+                    className="inline-flex items-center text-slate-400 hover:text-white mb-6 pl-0 hover:pl-2 transition-all group"
+                >
+                    <ArrowLeft className="w-4 h-4 mr-2" />
+                    <span className="font-medium">Back to Stories</span>
+                </Link>
 
                 {/* Article */}
-                <article className="bg-white rounded-xl shadow-sm overflow-hidden border border-slate-100">
-                    {/* Featured Image - prioritize Arvow thumbnail over featured_image_path */}
+                <article>
+                    {/* Header */}
+                    <header className="mb-10 text-center">
+                        {/* Tags */}
+                        <div className="flex items-center justify-center gap-2 mb-6">
+                            {post.tags && post.tags.length > 0 ? (
+                                post.tags.map((tag) => (
+                                    <span
+                                        key={tag}
+                                        className="px-3 py-1 rounded-full text-xs font-semibold bg-teal-500/10 text-teal-300 border border-teal-500/20 uppercase tracking-wider"
+                                    >
+                                        {tag}
+                                    </span>
+                                ))
+                            ) : post.categories && post.categories.length > 0 ? (
+                                post.categories.map((category) => (
+                                    <span
+                                        key={category.id}
+                                        className="px-3 py-1 rounded-full text-xs font-semibold bg-teal-500/10 text-teal-300 border border-teal-500/20 uppercase tracking-wider"
+                                    >
+                                        {category.name}
+                                    </span>
+                                ))
+                            ) : null}
+                        </div>
+
+                        {/* Title */}
+                        <h1 className="text-4xl md:text-6xl font-serif font-bold text-white mb-6 leading-tight">
+                            {post.title}
+                        </h1>
+
+                        {/* Meta */}
+                        <div className="flex items-center justify-center gap-6 text-slate-400 text-sm">
+                            <div className="flex items-center gap-2">
+                                <User className="w-4 h-4" />
+                                <span>{post.user?.name || "Anonymous"}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Calendar className="w-4 h-4" />
+                                <span>
+                                    {formatDate(post.published_at || post.created_at)}
+                                </span>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Featured Image */}
                     {(post.thumbnail_url || post.featured_image_path) && (
-                        <div className="w-full">
+                        <div className="relative aspect-[21/9] mb-12 rounded-2xl overflow-hidden shadow-2xl shadow-teal-500/10">
                             <img
                                 src={
                                     post.thumbnail_url ||
                                     `/storage/${post.featured_image_path}`
                                 }
                                 alt={post.thumbnail_alt_text || post.title}
-                                className="w-full h-64 md:h-80 object-cover"
-                                onError={(e) => {
-                                    console.error(
-                                        `Failed to load image for post "${post.title}":`,
-                                        post.thumbnail_url ||
-                                            post.featured_image_path
-                                    );
-                                    console.error(
-                                        "Image element:",
-                                        e.currentTarget
-                                    );
-                                }}
-                                onLoad={() => {
-                                    console.log(
-                                        `Successfully loaded image for post "${post.title}":`,
-                                        post.thumbnail_url ||
-                                            post.featured_image_path
-                                    );
-                                }}
+                                className="w-full h-full object-cover"
                             />
                         </div>
                     )}
 
-                    <div className="p-8 md:p-12">
-                        {/* Header */}
-                        <header className="mb-8">
-                            <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 leading-tight">
-                                {post.title}
-                            </h1>
-
-                            <div className="flex items-center space-x-4">
-                                <div className="flex items-center space-x-3">
-                                    <div className="flex-shrink-0">
-                                        <div className="h-10 w-10 rounded-full bg-slate-100 flex items-center justify-center">
-                                            <span className="text-sm font-medium text-slate-600">
-                                                {post.user?.name?.charAt(0) ||
-                                                    "A"}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-medium text-slate-900">
-                                            {post.user?.name || "Anonymous"}
-                                        </p>
-                                        <p className="text-sm text-slate-500">
-                                            {formatDate(
-                                                post.published_at ||
-                                                    post.created_at
-                                            )}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Categories */}
-                            {post.categories && post.categories.length > 0 && (
-                                <div className="mt-4">
-                                    <span className="text-sm font-medium text-slate-600 mr-2">
-                                        Categories:
-                                    </span>
-                                    <div className="inline-flex flex-wrap gap-2">
-                                        {post.categories.map(
-                                            (category, index) => (
-                                                <Link
-                                                    key={category.id}
-                                                    href={route(
-                                                        "blog.category.show",
-                                                        category.slug
-                                                    )}
-                                                    className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-700 hover:bg-indigo-200 transition-colors duration-200"
-                                                >
-                                                    {category.name}
-                                                </Link>
-                                            )
-                                        )}
-                                    </div>
-                                </div>
-                            )}
-                        </header>
-
-                        {/* Tags */}
-                        {post.tags && post.tags.length > 0 && (
-                            <div className="mb-6">
-                                <div className="flex flex-wrap gap-2">
-                                    {post.tags.map((tag, index) => (
-                                        <span
-                                            key={index}
-                                            className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors"
-                                        >
-                                            #{tag}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-                        )}
-
-                        {/* Excerpt */}
-                        {post.excerpt && (
-                            <div className="mb-8 p-6 bg-slate-50 rounded-lg border-l-4 border-slate-500">
-                                <p className="text-lg text-slate-700 italic leading-relaxed">
-                                    {post.excerpt}
-                                </p>
-                            </div>
-                        )}
-
-                        {/* Content */}
-                        <div className="prose prose-lg max-w-none prose-slate prose-headings:text-slate-900 prose-a:text-slate-600 prose-a:no-underline hover:prose-a:underline">
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: post.content,
-                                }}
-                            />
+                    {/* Excerpt */}
+                    {post.excerpt && (
+                        <div className="mb-8 p-6 bg-slate-900/50 rounded-lg border-l-4 border-teal-500 backdrop-blur-sm">
+                            <p className="text-lg text-slate-300 italic leading-relaxed">
+                                {post.excerpt}
+                            </p>
                         </div>
+                    )}
+
+                    {/* Content */}
+                    <div className="prose prose-invert prose-lg max-w-none prose-headings:font-serif prose-headings:font-bold prose-p:text-slate-300 prose-a:text-teal-400 prose-blockquote:border-teal-500 prose-blockquote:bg-slate-900/50 prose-blockquote:p-4 prose-blockquote:rounded-r-lg">
+                        <div
+                            dangerouslySetInnerHTML={{
+                                __html: post.content,
+                            }}
+                        />
+                    </div>
+
+                    {/* Share Section */}
+                    <div className="mt-16 pt-8 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <p className="text-slate-500 italic">
+                            Enjoyed this read? Share it with your network.
+                        </p>
+                        <button
+                            onClick={() => {
+                                navigator.clipboard.writeText(window.location.href);
+                                alert("Link copied to clipboard!");
+                            }}
+                            className="inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-950 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 focus:ring-slate-500"
+                        >
+                            <Share2 className="w-4 h-4 mr-2" />
+                            Share Article
+                        </button>
                     </div>
                 </article>
 
                 {/* Footer */}
                 <div className="mt-12 text-center">
-                    <div className="bg-white rounded-xl p-8 shadow-sm border border-slate-100">
-                        <h3 className="text-lg font-semibold text-slate-900 mb-4">
+                    <div className="bg-slate-900/50 rounded-xl p-8 border border-slate-800 backdrop-blur-sm">
+                        <h3 className="text-lg font-semibold text-slate-100 mb-4">
                             Enjoyed this article?
                         </h3>
-                        <p className="text-slate-600 mb-6">
+                        <p className="text-slate-400 mb-6">
                             Check out more insights and updates on our blog.
                         </p>
                         <Link
                             href={`/${blog_base_path}`}
-                            className="inline-flex items-center px-6 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors duration-200 font-medium"
+                            className="inline-flex items-center px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-500 transition-colors duration-200 font-medium shadow-lg shadow-teal-500/20"
                         >
-                            <svg
-                                className="mr-2 w-4 h-4"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M15 19l-7-7 7-7"
-                                />
-                            </svg>
+                            <ArrowLeft className="mr-2 w-4 h-4" />
                             Back to All Posts
                         </Link>
                     </div>
                 </div>
-            </div>
+            </motion.div>
         </BlogLayout>
     );
 }

@@ -2,6 +2,7 @@ import { Head, Link, usePage } from "@inertiajs/react";
 import { BlogPost, Category, PaginatedResponse, PageProps } from "@/types";
 import BlogLayout from "@/Layouts/BlogLayout";
 import EnhancedPagination from "@/Components/EnhancedPagination";
+import { motion } from "framer-motion";
 
 interface CategoryShowProps extends PageProps {
     category: Category;
@@ -35,53 +36,54 @@ export default function CategoryShow() {
             </Head>
 
             {/* Category Header Section */}
-            <div className="bg-slate-100 border-b border-slate-200 -mx-4 sm:-mx-6 lg:-mx-8">
-                <div className="px-4 sm:px-6 lg:px-8 py-16">
-                    <div className="text-center">
-                        {/* Breadcrumb */}
-                        <nav className="flex justify-center mb-6">
-                            <ol className="flex items-center space-x-2 text-sm">
-                                <li>
-                                    <Link
-                                        href={`/${blog_base_path}`}
-                                        className="text-slate-600 hover:text-slate-800 transition-colors"
-                                    >
-                                        Blog
-                                    </Link>
-                                </li>
-                                <li className="text-slate-400">/</li>
-                                <li className="text-slate-900 font-medium">
-                                    {category.name}
-                                </li>
-                            </ol>
-                        </nav>
-
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-slate-900">
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="mb-12 text-center max-w-2xl mx-auto"
+            >
+                {/* Breadcrumb */}
+                <nav className="flex justify-center mb-6">
+                    <ol className="flex items-center space-x-2 text-sm">
+                        <li>
+                            <Link
+                                href={`/${blog_base_path}`}
+                                className="text-slate-400 hover:text-teal-400 transition-colors"
+                            >
+                                Blog
+                            </Link>
+                        </li>
+                        <li className="text-slate-600">/</li>
+                        <li className="text-teal-400 font-medium">
                             {category.name}
-                        </h1>
-                        
-                        {category.description && (
-                            <p className="text-xl md:text-2xl text-slate-600 max-w-2xl mx-auto">
-                                {category.description}
-                            </p>
-                        )}
-                        
-                        <div className="mt-6">
-                            <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-slate-200 text-slate-700">
-                                {postsData.total} {postsData.total === 1 ? 'post' : 'posts'}
-                            </span>
-                        </div>
-                    </div>
+                        </li>
+                    </ol>
+                </nav>
+
+                <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4 text-white">
+                    {category.name}
+                </h1>
+
+                {category.description && (
+                    <p className="text-xl md:text-2xl text-slate-400 max-w-2xl mx-auto">
+                        {category.description}
+                    </p>
+                )}
+
+                <div className="mt-6">
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-teal-500/10 text-teal-300 border border-teal-500/20">
+                        {postsData.total} {postsData.total === 1 ? 'post' : 'posts'}
+                    </span>
                 </div>
-            </div>
+            </motion.div>
 
             {/* Main Content */}
-            <div className="py-12">
+            <div className="py-6">
                 {postsData.data.length === 0 ? (
                     <div className="text-center py-16">
                         <div className="max-w-md mx-auto">
                             <svg
-                                className="mx-auto h-12 w-12 text-slate-400"
+                                className="mx-auto h-12 w-12 text-slate-600"
                                 fill="none"
                                 viewBox="0 0 24 24"
                                 stroke="currentColor"
@@ -93,7 +95,7 @@ export default function CategoryShow() {
                                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                                 />
                             </svg>
-                            <h3 className="mt-4 text-lg font-medium text-slate-900">
+                            <h3 className="mt-4 text-lg font-medium text-slate-100">
                                 No posts found in this category
                             </h3>
                             <p className="mt-2 text-slate-500">
@@ -102,7 +104,7 @@ export default function CategoryShow() {
                             <div className="mt-6">
                                 <Link
                                     href={`/${blog_base_path}`}
-                                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-slate-600 hover:bg-slate-700 transition-colors"
+                                    className="inline-flex items-center px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-500 transition-colors duration-200 font-medium shadow-lg shadow-teal-500/20"
                                 >
                                     Browse All Posts
                                 </Link>
@@ -111,130 +113,73 @@ export default function CategoryShow() {
                     </div>
                 ) : (
                     <>
-                        {/* Posts List */}
-                        <div className="space-y-8">
-                            {postsData.data.map((post) => (
-                                <article
+                        {/* Posts Grid */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                            {postsData.data.map((post, index) => (
+                                <motion.article
                                     key={post.id}
-                                    className="group relative bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: index * 0.1, duration: 0.5 }}
+                                    whileHover={{ y: -5 }}
+                                    className="group relative flex flex-col bg-slate-900/50 border border-slate-800 rounded-2xl overflow-hidden hover:border-teal-500/50 transition-colors duration-300 cursor-pointer backdrop-blur-sm"
                                 >
-                                    <div className="flex">
-                                        {(post.thumbnail_url || post.featured_image_path) && (
-                                            <div className="w-48 flex-shrink-0">
-                                                <img
-                                                    src={post.thumbnail_url || `/storage/${post.featured_image_path}`}
-                                                    alt={post.thumbnail_alt_text || post.title}
-                                                    className="w-full h-32 object-cover rounded-l-xl"
-                                                    onError={(e) => {
-                                                        console.error(
-                                                            `Failed to load image for post "${post.title}":`,
-                                                            post.thumbnail_url || post.featured_image_path
-                                                        );
-                                                    }}
-                                                />
-                                            </div>
-                                        )}
-                                        <div className="p-6 flex-1">
-                                            <div className="flex items-center justify-between mb-4">
-                                                <div className="flex items-center space-x-3">
-                                                    <div className="flex-shrink-0">
-                                                        <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center">
-                                                            <span className="text-sm font-medium text-slate-600">
-                                                                {post.user?.name?.charAt(0) || "A"}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div>
-                                                        <p className="text-sm font-medium text-slate-900">
-                                                            {post.user?.name || "Anonymous"}
-                                                        </p>
-                                                        <p className="text-sm text-slate-500">
-                                                            {formatDate(
-                                                                post.published_at || post.created_at
-                                                            )}
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    {/* Featured Image */}
+                                    {(post.thumbnail_url || post.featured_image_path) && (
+                                        <div className="aspect-video w-full overflow-hidden relative">
+                                            <img
+                                                src={
+                                                    post.thumbnail_url ||
+                                                    `/storage/${post.featured_image_path}`
+                                                }
+                                                alt={post.thumbnail_alt_text || post.title}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                                loading="lazy"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent opacity-60" />
+                                        </div>
+                                    )}
 
-                                            <Link
-                                                href={`/${blog_base_path}/${post.slug}`}
-                                                className="block group"
-                                            >
-                                                <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-slate-600 transition-colors duration-200">
-                                                    {post.title}
-                                                </h3>
-                                            </Link>
-
-                                            {post.excerpt && (
-                                                <p className="text-slate-600 mb-4 leading-relaxed line-clamp-2">
-                                                    {post.excerpt}
-                                                </p>
-                                            )}
-
-                                            {/* Tags */}
+                                    <div className="p-6 flex flex-col flex-1">
+                                        {/* Tags */}
+                                        <div className="flex items-center gap-3 text-xs text-teal-400 font-medium mb-3">
                                             {post.tags && post.tags.length > 0 && (
-                                                <div className="mb-4">
-                                                    <div className="flex flex-wrap gap-1">
-                                                        {post.tags.slice(0, 3).map((tag, index) => (
-                                                            <span
-                                                                key={index}
-                                                                className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
-                                                            >
-                                                                #{tag}
-                                                            </span>
-                                                        ))}
-                                                        {post.tags.length > 3 && (
-                                                            <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
-                                                                +{post.tags.length - 3}
-                                                            </span>
-                                                        )}
-                                                    </div>
-                                                </div>
+                                                <span className="bg-teal-500/10 px-2 py-1 rounded-full border border-teal-500/20">
+                                                    {post.tags[0]}
+                                                </span>
                                             )}
+                                        </div>
 
-                                            {/* Categories (excluding current category) */}
-                                            {post.categories && post.categories.length > 0 && (
-                                                <div className="mb-4">
-                                                    <div className="flex flex-wrap gap-1">
-                                                        {post.categories
-                                                            .filter(cat => cat.id !== category.id)
-                                                            .slice(0, 2)
-                                                            .map((cat) => (
-                                                                <Link
-                                                                    key={cat.id}
-                                                                    href={`/${blog_base_path}/category/${cat.slug}`}
-                                                                    className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700 hover:bg-blue-200 transition-colors"
-                                                                >
-                                                                    {cat.name}
-                                                                </Link>
-                                                            ))}
-                                                    </div>
+                                        {/* Title */}
+                                        <Link href={`/${blog_base_path}/${post.slug}`}>
+                                            <h3 className="text-xl font-bold text-slate-100 mb-2 font-serif leading-tight group-hover:text-teal-400 transition-colors">
+                                                {post.title}
+                                            </h3>
+                                        </Link>
+
+                                        {/* Excerpt */}
+                                        {post.excerpt && (
+                                            <p className="text-slate-400 text-sm mb-4 line-clamp-2 flex-1">
+                                                {post.excerpt}
+                                            </p>
+                                        )}
+
+                                        {/* Author and Date */}
+                                        <div className="flex items-center justify-between mt-auto pt-4 border-t border-slate-800">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-teal-500 to-cyan-500 flex items-center justify-center text-[10px] font-bold text-white">
+                                                    {post.user?.name?.charAt(0) || "A"}
                                                 </div>
-                                            )}
-
-                                            <Link
-                                                href={`/${blog_base_path}/${post.slug}`}
-                                                className="inline-flex items-center text-slate-600 hover:text-slate-800 font-medium transition-colors duration-200"
-                                            >
-                                                Read more
-                                                <svg
-                                                    className="ml-2 w-4 h-4"
-                                                    fill="none"
-                                                    stroke="currentColor"
-                                                    viewBox="0 0 24 24"
-                                                >
-                                                    <path
-                                                        strokeLinecap="round"
-                                                        strokeLinejoin="round"
-                                                        strokeWidth={2}
-                                                        d="M9 5l7 7-7 7"
-                                                    />
-                                                </svg>
-                                            </Link>
+                                                <span className="text-xs text-slate-400">
+                                                    {post.user?.name || "Anonymous"}
+                                                </span>
+                                            </div>
+                                            <span className="text-xs text-slate-500">
+                                                {formatDate(post.published_at || post.created_at)}
+                                            </span>
                                         </div>
                                     </div>
-                                </article>
+                                </motion.article>
                             ))}
                         </div>
 

@@ -23,9 +23,9 @@ export default function BlogSidebar({ categories = [], recentPosts = [], popular
         <aside className="w-full lg:w-80 space-y-8">
             {/* Categories Section */}
             {categories.length > 0 && (
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                    <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center">
-                        <svg className="w-5 h-5 mr-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-slate-900/50 rounded-xl border border-slate-800 p-6 backdrop-blur-sm">
+                    <h3 className="text-lg font-semibold text-slate-100 mb-4 flex items-center">
+                        <svg className="w-5 h-5 mr-2 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                         </svg>
                         Categories
@@ -35,13 +35,13 @@ export default function BlogSidebar({ categories = [], recentPosts = [], popular
                             <Link
                                 key={category.id}
                                 href={`/${blog_base_path}/category/${category.slug}`}
-                                className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors group"
+                                className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-800/50 transition-colors group"
                             >
-                                <span className="text-slate-700 group-hover:text-slate-900 font-medium">
+                                <span className="text-slate-300 group-hover:text-teal-400 font-medium">
                                     {category.name}
                                 </span>
                                 {category.posts_count !== undefined && (
-                                    <span className="text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full">
+                                    <span className="text-xs bg-teal-500/10 text-teal-400 px-2 py-1 rounded-full border border-teal-500/20">
                                         {category.posts_count}
                                     </span>
                                 )}
@@ -53,9 +53,9 @@ export default function BlogSidebar({ categories = [], recentPosts = [], popular
 
             {/* Recent Posts Section */}
             {recentPosts.length > 0 && (
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                    <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center">
-                        <svg className="w-5 h-5 mr-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-slate-900/50 rounded-xl border border-slate-800 p-6 backdrop-blur-sm">
+                    <h3 className="text-lg font-semibold text-slate-100 mb-4 flex items-center">
+                        <svg className="w-5 h-5 mr-2 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                         </svg>
                         Recent Posts
@@ -67,7 +67,7 @@ export default function BlogSidebar({ categories = [], recentPosts = [], popular
                                     href={`/${blog_base_path}/${post.slug}`}
                                     className="block"
                                 >
-                                    <h4 className="text-sm font-medium text-slate-900 group-hover:text-slate-600 transition-colors line-clamp-2 mb-2">
+                                    <h4 className="text-sm font-medium text-slate-100 group-hover:text-teal-400 transition-colors line-clamp-2 mb-2">
                                         {post.title}
                                     </h4>
                                     <div className="flex items-center text-xs text-slate-500">
@@ -90,9 +90,9 @@ export default function BlogSidebar({ categories = [], recentPosts = [], popular
 
             {/* Popular Tags Section */}
             {popularTags.length > 0 && (
-                <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                    <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center">
-                        <svg className="w-5 h-5 mr-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="bg-slate-900/50 rounded-xl border border-slate-800 p-6 backdrop-blur-sm">
+                    <h3 className="text-lg font-semibold text-slate-100 mb-4 flex items-center">
+                        <svg className="w-5 h-5 mr-2 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                         </svg>
                         Popular Tags
@@ -101,7 +101,7 @@ export default function BlogSidebar({ categories = [], recentPosts = [], popular
                         {popularTags.map((tag, index) => (
                             <span
                                 key={index}
-                                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors cursor-pointer"
+                                className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-teal-500/10 text-teal-300 hover:bg-teal-500/20 transition-colors cursor-pointer border border-teal-500/20"
                             >
                                 #{tag}
                             </span>
@@ -114,9 +114,9 @@ export default function BlogSidebar({ categories = [], recentPosts = [], popular
             <SocialLinks socialLinks={socialLinks} />
 
             {/* Quick Links Section */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <h3 className="text-lg font-semibold text-slate-900 mb-4 flex items-center">
-                    <svg className="w-5 h-5 mr-2 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-slate-900/50 rounded-xl border border-slate-800 p-6 backdrop-blur-sm">
+                <h3 className="text-lg font-semibold text-slate-100 mb-4 flex items-center">
+                    <svg className="w-5 h-5 mr-2 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                     </svg>
                     Quick Links
@@ -124,25 +124,25 @@ export default function BlogSidebar({ categories = [], recentPosts = [], popular
                 <div className="space-y-2">
                     <Link
                         href="/"
-                        className="block p-2 text-sm text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors"
+                        className="block p-2 text-sm text-slate-300 hover:text-teal-400 hover:bg-slate-800/50 rounded-lg transition-colors"
                     >
                         🏠 Home
                     </Link>
                     <Link
                         href="/contact-us"
-                        className="block p-2 text-sm text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors"
+                        className="block p-2 text-sm text-slate-300 hover:text-teal-400 hover:bg-slate-800/50 rounded-lg transition-colors"
                     >
                         📧 Contact Us
                     </Link>
                     <Link
                         href="/privacy-policy"
-                        className="block p-2 text-sm text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors"
+                        className="block p-2 text-sm text-slate-300 hover:text-teal-400 hover:bg-slate-800/50 rounded-lg transition-colors"
                     >
                         🔒 Privacy Policy
                     </Link>
                     <Link
                         href="/terms"
-                        className="block p-2 text-sm text-slate-700 hover:text-slate-900 hover:bg-slate-50 rounded-lg transition-colors"
+                        className="block p-2 text-sm text-slate-300 hover:text-teal-400 hover:bg-slate-800/50 rounded-lg transition-colors"
                     >
                         📋 Terms of Service
                     </Link>
