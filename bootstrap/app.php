@@ -29,7 +29,9 @@ return Application::configure(basePath: dirname(__DIR__))
             'subscribed' => Subscribed::class,
             'admin' => Admin::class,
         ]);
-
+        // Trust all proxies
+        $middleware->trustProxies(at: '*');
+      
         // Replace the default CSRF middleware with our custom one
         $middleware->web(replace: [
            
